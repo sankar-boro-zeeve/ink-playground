@@ -10,7 +10,7 @@ clap = { version =  "4.3.0", features = [ "derive" ] }
 serde = { version = "1.0.163", features = ["derive"] }
 serde_json = { version = "1.0.96", features = ["preserve_order"] }
 crossbeam-channel = "0.5.8"
-anyhow = "1.0.71"
+anyhow = "1.0.72"
 log = "0.4.18"
 tracing = "0.1.38"
 ide_db = { package = "ra_ap_ide_db", version = "0.0.120" }
