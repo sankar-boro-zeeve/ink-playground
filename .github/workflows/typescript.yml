@@ -1,0 +1,100 @@
+name: TypeScript
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - name: TS install
+        run: make ts-install
+
+      - name: TS lint
+        run: make ts-lint
+
+  check-format:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - name: TS install
+        run: make ts-install
+
+      - name: TS check-format
+        run: make ts-check-format
+
+  check-spelling:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - name: TS install
+        run: make ts-install
+
+      - name: TS check-spelling
+        run: make ts-check-spelling
+
+  test-playground:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - name: Install wasm-pack
+        uses: jetli/wasm-pack-action@v0.4.0
+        with:
+          version: 'latest'
+
+      - name: Install required nightly
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly-2022-05-24-x86_64-unknown-linux-gnu
+          components: rust-src
+
+      - name: Use stable toolchain as default
+        run: rustup default stable
+
+      - name: TS install
+        run: make ts-install
+
+      - name: Generate
+        run: make generate
+
+      - name: Playground Test
+        run: make playground-test
+
+  test-components:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - name: TS install
+        run: make ts-install
+
+      - name: Components Test
+        run: make components-test

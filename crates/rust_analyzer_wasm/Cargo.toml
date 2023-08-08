@@ -1,0 +1,39 @@
+[package]
+name = "rust_analyzer_wasm"
+version = "0.1.0"
+edition = "2021"
+authors = ["Achim Schneider <achim@parity.io>"]
+license = "Apache-2.0"
+readme = "README.md"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+lsp-types = { version = "0.94.0", features = ["proposed"] }
+console_error_panic_hook = { version = "0.1.7" }
+instant = { version = "0.1.12", features = ["wasm-bindgen"] }
+log = { version = "0.4.18", features = ["release_max_level_warn"] }
+serde = { version = "1.0.163", features = ["derive"] }
+serde_json = { version = "1.0.96", features = ["preserve_order"] }
+serde_repr = "0.1.11"
+serde-wasm-bindgen = "0.5.0"
+stacker = "0.1.15"
+wasm-bindgen = "0.2.86"
+rayon = "1.7.0"
+wasm-bindgen-rayon = "1.0.3"
+change_json = {path = "../change_json" }
+
+ide_db = {package = "ra_ap_ide_db", version = "0.0.120"}
+ide = {package = "ra_ap_ide", version = "0.0.120"}
+syntax = {package = "ra_ap_syntax", version = "0.0.120"}
+
+[dependencies.web-sys]
+version = "0.3"
+features = [ "console" ]
+
+[dev-dependencies]
+wasm-bindgen-test = "0.3.36"
+wasm-bindgen-futures = "0.4.36"
+js-sys = "0.3.63"
+cfg = { package = "ra_ap_cfg", version = "0.0.120" }

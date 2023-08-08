@@ -1,0 +1,27 @@
+################################################################################
+# Build Base Image
+################################################################################
+
+# Start from a rust base image
+FROM rust:1.69
+
+WORKDIR /app
+
+RUN apt-get -y -qq update && \
+	apt-get install -y -qq curl && \
+	apt-get clean
+
+RUN rustup update stable
+RUN rustup install 1.69
+RUN rustup default 1.69
+RUN rustup component add rust-src --toolchain 1.69
+RUN rustup target add wasm32-unknown-unknown --toolchain 1.69
+COPY ./lib/jq /usr/local/bin/jq
+RUN chmod +x /usr/local/bin/jq
+RUN curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+
+RUN cargo install --force --locked cargo-contract --version 2.0.0
+
+COPY ./config/ink_releases.json ./ink_releases.json
+COPY ./scripts/make_ink_compilers.sh ./make_ink_compilers.sh
+RUN ./make_ink_compilers.sh
