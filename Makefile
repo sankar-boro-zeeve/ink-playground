@@ -30,7 +30,7 @@ FORMATTING_URL ?= http://localhost:4000/format
 
 ANALYTICS_URL ?= https://api-sa.substrate.io
 
-DOCKER_USER_NAME ?= achimcc
+DOCKER_USER_NAME ?= sankarboro
 
 ################################################################################
 # GENERATE

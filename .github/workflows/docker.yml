@@ -27,10 +27,10 @@ jobs:
       - name: Build docker
         run: make docker-buildkit
         env:
-          DOCKER_USER_NAME: achimcc
+          DOCKER_USER_NAME: sankarboro
 
       - name: Tag Docker image
-        run: docker tag achimcc/ink-playground:latest ink-playground
+        run: docker tag sankarboro/ink-playground:latest ink-playground
 
       - name: Run docker
         run: make docker-run-detach
@@ -76,7 +76,7 @@ jobs:
         run: echo "Build number is $BUILD_NUMBER"
 
       - name: Apply build number Tag to Docker image
-        run: docker tag achimcc/ink-playground:latest achimcc/ink-playground:1.0.$BUILD_NUMBER
+        run: docker tag sankarboro/ink-playground:latest sankarboro/ink-playground:1.0.$BUILD_NUMBER
 
       - name: Push version tagged Docker image
         if: github.ref == 'refs/heads/main' && github.repository == 'paritytech/ink-playground'

@@ -63,9 +63,9 @@ To clone and build the whole project on your local computer, enter:
 
 Then pull and tag the docker image which is used by the backend to compile, test & format Smart Contracts:
 
-6. `docker pull achimcc/ink-compiler`
+6. `docker pull sankarboro/ink-compiler`
 
-7. `docker tag achimcc/ink-compiler ink-compiler`
+7. `docker tag sankarboro/ink-compiler ink-compiler`
 
 Finally, start the backend with:
 
