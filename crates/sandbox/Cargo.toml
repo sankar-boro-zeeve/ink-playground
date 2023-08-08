@@ -17,7 +17,7 @@ tokio = { version = "1.28.2", features = [
     "process",
     "rt-multi-thread",
 ] }
-ts-rs = { version = "6.2.1", features = [
+ts-rs = { version = "7.0.0", features = [
     "serde-compat",
 ] }
 typescript-type-def = "0.5.6"
