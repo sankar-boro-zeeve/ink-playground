@@ -1,11 +1,14 @@
 #!/bin/bash
 
 work_dir_path=$(pwd)
-config_path=$work_dir_path/config
+ink_data_path=$work_dir_path/config/ink-data
+mkdir -p $ink_data_path
 
-ink_release_data=$config_path/ink_release_data.json
-ink_release_tags=$config_path/ink_release_tags.json
-ink_releases=$config_path/ink_releases.json
+ink_release_data=$ink_data_path/ink_release_data.json
+ink_release_tags=$ink_data_path/ink_release_tags.json
+ink_releases=$ink_data_path/ink_releases.json
+stable_ink_releases=$ink_data_path/stable_ink_releases.json
+
 
 rm -rf $config_path/ink*
 
@@ -16,3 +19,4 @@ curl -L \
 
 jq '[ .[] | { tag_name }]' $ink_release_data > $ink_release_tags
 jq 'map(select(.tag_name | length < 7))' $ink_release_tags > $ink_releases
+jq '.[:5]' $ink_releases > $stable_ink_releases

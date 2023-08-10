@@ -1,14 +1,14 @@
 #!/bin/bash
 
-# local
-run_local() {
-    echo "running local..."
+# docker
+run_docker() {
     jq --version
-    ink_releases=$( jq -r '.[] | .tag_name' ./config/ink-data/stable_ink_releases.json; )
+    ink_releases=$( jq -r '.[] | .tag_name' /app/stable_ink_releases.json; )
     echo $ink_releases
 }
 
-run_local
+# run_docker
+run_docker
 
 COUNT=0
 declare -i COUNT
@@ -28,9 +28,7 @@ build() {
     cargo update -p ink_metadata --precise $1
 }
 
-thisdir="/home/sankar/ink-data"
-rm -rf -p $thisdir
-mkdir -p $thisdir
+thisdir="/app"
 
 for tag_name in $ink_releases
 do

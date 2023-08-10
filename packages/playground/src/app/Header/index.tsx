@@ -23,7 +23,6 @@ import { compile } from '~/context/side-effects/compile';
 import { testing } from '~/context/side-effects/testing';
 import { format } from '~/context/side-effects/format';
 import * as constants from '~/constants';
-import inkVersionsJSON from "../../../../../config/ink_releases.json";
 import { Colors } from '@paritytech/components/ButtonWithIcon';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -51,22 +50,49 @@ const mapIconColor = (size: number | null): { color: keyof Colors; shade: string
   return { color: 'red', shade: '400' };
 };
 
+type InkVersions = {
+  tag_name: string;
+}
+
+type InkData = {
+  tag_name: string;
+}
+
+const useInkVersions = () => {
+  const [versions, setVersions] = useState<InkVersions[]>([]);
+  useEffect(() => {
+    fetch('https://api.github.com/repos/paritytech/ink/releases')
+    .then((res) => res.json())
+    .then((res) => {
+      const inkVersions = res.map((d: InkData) => {
+        return { tag_name: d.tag_name }
+      }).filter((f: InkData) => f.tag_name.length < 7).splice(0, 5);
+      if (inkVersions && Array.isArray(inkVersions)) {
+        setVersions(inkVersions);
+      }
+    })
+  }, []);
+  return versions
+}
+
 export const Header = (): ReactElement => {
   const [state, dispatch]: [State, Dispatch] = useContext(AppContext);
   const [, dispatchMessage]: [MessageState, MessageDispatch] = useContext(MessageContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const inkVersions__ = useInkVersions();
 
   const [inkVersions, setInkVersions] = useState<any>([]);
-  const [selectedInkVersion, setSelectedInkVersion] = useState<any>(null);
+  const [selectedInkVersion, setSelectedInkVersion] = useState<any>();
   useEffect(() => {
-    setInkVersions(inkVersionsJSON)
+    setInkVersions(inkVersions__)
+    console.log('location', location);
     if (location.state?.version) {
       setSelectedInkVersion(location.state?.version)
     } else {
-      setSelectedInkVersion(inkVersionsJSON[0]?.tag_name)
+      setSelectedInkVersion(inkVersions__[0]?.tag_name)
     }
-  }, [])
+  }, [inkVersions__, location])
 
   const settingsOverlay = useRef<OverlayPanel>(null);
   const shareOverlay = useRef<OverlayPanel>(null);
@@ -81,7 +107,6 @@ export const Header = (): ReactElement => {
 
   const compileVersion = (state: any, dispatch: any, dispatchMessage: any) => {
     if (selectedInkVersion) {
-      console.log(selectedInkVersion);
       compile(state, dispatch, dispatchMessage, selectedInkVersion)
     }
   }
@@ -144,10 +169,10 @@ export const Header = (): ReactElement => {
         />
         {inkVersions.length > 0 ? <>
           <select className='dark:bg-primary' onChange={(e) => {
-            navigate(`/${e.target.value}`, { state: { version: selectedInkVersion } });
+            navigate(`/${e.target.value}`, { state: { version: e.target.value } });
             console.log(e.target.value)
             setSelectedInkVersion(e.target.value);
-          }} value={selectedInkVersion ? selectedInkVersion : null}>
+          }} value={selectedInkVersion}>
             {inkVersions.map((v: any) => { 
               return <option key={v.tag_name}>{v.tag_name}</option>
               }

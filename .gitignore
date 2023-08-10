@@ -21,7 +21,6 @@ packages/_generated/*/src
 !.yarn/versions
 coverage
 data
-config/data
-ink
+config/ink-data
 tomls
 tmp/

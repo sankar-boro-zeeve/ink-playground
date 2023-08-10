@@ -22,6 +22,6 @@ RUN curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 
 RUN cargo install --force --locked cargo-contract --version 2.0.0
 
-COPY ./config/ink_releases.json ./ink_releases.json
-COPY ./scripts/make_ink_compilers.sh ./make_ink_compilers.sh
+COPY ./config/ink-data/stable_ink_releases.json ./stable_ink_releases.json
+COPY ./scripts/make_docker_ink_compilers.sh ./make_ink_compilers.sh
 RUN ./make_ink_compilers.sh
