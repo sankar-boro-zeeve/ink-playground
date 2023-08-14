@@ -10,4 +10,4 @@ readme = "README.md"
 clap = { version = "4.3.0", features = [ "derive" ] }
 serde = "1"
 backend = { path = "../backend" }
-typescript-type-def = "0.5.6"
+typescript-type-def = "0.5.8"
