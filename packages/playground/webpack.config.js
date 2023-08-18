@@ -19,7 +19,7 @@ const localConfig = {
   output: {
     filename: 'bundle.[fullhash].js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: "/"
+    publicPath: '/',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.wasm', '.css'],
@@ -29,9 +29,9 @@ const localConfig = {
       '@paritytech/components': path.resolve(__dirname, '../components/src'),
     },
     fallback: {
-      "fs": false,
-      "http": require.resolve("stream-http"),
-      "https": require.resolve("https-browserify"),
+      fs: false,
+      http: require.resolve('stream-http'),
+      https: require.resolve('https-browserify'),
     },
   },
   stats: 'errors-only',

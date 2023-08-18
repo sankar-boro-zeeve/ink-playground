@@ -8,7 +8,7 @@ import { configureLanguage, setTokens, Token } from './configureLanguage';
 
 const modeId = 'ra-rust'; // not "rust" to circumvent conflict
 
-export const startRustAnalyzer = async (uri: Uri) => {
+export const startRustAnalyzer = async (uri: Uri, selectedInkVersion: string) => {
   const model = monaco.editor.getModel(uri);
   if (!model) return;
 
@@ -36,7 +36,7 @@ export const startRustAnalyzer = async (uri: Uri) => {
 
   const allTokens: Array<Token> = [];
   monaco.languages.onLanguage(modeId, configureLanguage(worldState, allTokens));
-  const data = await fetch(`./change.json`);
+  const data = await fetch(`./change_${selectedInkVersion.replaceAll('.', '_')}.json`);
   const textData = await data.text();
   const encoder = new TextEncoder();
   const bufferData = encoder.encode(textData);

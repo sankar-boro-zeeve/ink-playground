@@ -39,10 +39,12 @@ DOCKER_USER_NAME ?= sankarboro
 generate-bindings:
 	cargo run -p generate-bindings -- --target $(shell pwd)/packages/_generated/commontypes/src
 
+# generate-change-json:
+# 	cargo run --package crate-extractor -- create \
+# 			-m ./crates/contract/Cargo.toml \
+# 			-o packages/_generated/change/src/change.json
 generate-change-json:
-	cargo run --package crate-extractor -- create \
-			-m ./crates/contract/Cargo.toml \
-			-o packages/_generated/change/src/change.json
+	./scripts/generate_change_json.sh
 
 generate-rust-analyzer:
 	wasm-pack build crates/rust_analyzer_wasm/ --out-dir ../../packages/ink-editor/pkg --target web
@@ -265,7 +267,10 @@ check-format: rust-check-format
 check-format: ts-check-format
 
 check-spelling: ts-check-spelling
+clean-generated:
+	rm -rf ./packages/_generated/change/src/*
 
+clean: clean-generated
 clean: rust-clean
 clean: components-clean
 clean: ts-clean

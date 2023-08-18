@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 import MonacoEditor, { MonacoEditorProps, monaco } from 'react-monaco-editor';
 import { Uri } from 'monaco-editor/esm/vs/editor/editor.api';
+import { useLocation } from 'react-router-dom';
 
 const dark_teal = '67c6b0';
 const dark_text = 'ffffff';
@@ -114,6 +115,7 @@ export interface InkEditorProps {
   minimap?: boolean;
   darkmode?: boolean;
   rustAnalyzer?: boolean;
+  selectedInkVersion: string;
 }
 export const InkEditor = (props: InkEditorProps): ReactElement | null => {
   const editorDidMount = async (editor: MonacoEditor['editor']): Promise<void> => {
@@ -125,7 +127,7 @@ export const InkEditor = (props: InkEditorProps): ReactElement | null => {
         props.setURI && props.setURI(model.uri);
         await import('./utils/startRustAnalyzer').then(async code => {
           props.onRustAnalyzerStartLoad && props.onRustAnalyzerStartLoad();
-          await code.startRustAnalyzer(model.uri);
+          await code.startRustAnalyzer(model.uri, props.selectedInkVersion);
           props.onRustAnalyzerFinishLoad && props.onRustAnalyzerFinishLoad();
         });
       }

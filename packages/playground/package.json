@@ -29,7 +29,7 @@
   },
   "scripts": {
     "build": "rimraf dist && NODE_ENV=production webpack --config webpack.config.js --mode production",
-    "start": "webpack serve --host 0.0.0.0",
+    "start": "webpack serve --config webpack.config.js --host 0.0.0.0 --env env=dev",
     "clean": "rimraf dist node_modules",
     "test": "jest --update-snapshot",
     "test:watch": "jest --update-snapshot --watch",

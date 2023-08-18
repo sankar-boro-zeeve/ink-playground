@@ -1612,9 +1612,9 @@ dependencies = [
 
 [[package]]
 name = "ink"
-version = "4.2.0"
+version = "4.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b374fcb3c9b91f8293bdc93d69292e2ec6ea19e97e00725806d79bf563fa5e55"
+checksum = "311a988dada2242dc748834b86f330bb37ff25482ceef8767104f512a3c465a7"
 dependencies = [
  "derive_more",
  "ink_env",
@@ -1718,9 +1718,9 @@ dependencies = [
 
 [[package]]
 name = "ink_macro"
-version = "4.2.0"
+version = "4.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "15abf802e89909c65b6c15d0c655beb3c7ab86309626effb5d9b330d97308114"
+checksum = "c0399b6423e892efb4d39eb76ed9286e4e93fab8141f89b4f4348ee77065b81d"
 dependencies = [
  "ink_codegen",
  "ink_ir",
@@ -1772,9 +1772,9 @@ dependencies = [
 
 [[package]]
 name = "ink_storage"
-version = "4.2.0"
+version = "4.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e02d898d2ff85c88126d284854e1198771be94282d44a5d77fdc8a9bce43e398"
+checksum = "9a0f0858c90d5660dc6ec76d31388919a9609aab74723262ccf893d81aafd06c"
 dependencies = [
  "array-init",
  "cfg-if",
