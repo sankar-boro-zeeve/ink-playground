@@ -12,26 +12,19 @@ import { loadCode } from '~/context/side-effects/load-code';
 import { monaco } from 'react-monaco-editor';
 import {
   Routes,
-  Route
+  Route,
+  useLocation
 } from "react-router-dom";
 
-type InkVersions = {
-  tag_name: string;
-}
-
-type InkData = {
-  tag_name: string;
-}
-
 const useInkVersions = () => {
-  const [versions, setVersions] = useState<InkVersions[]>([]);
+  const [versions, setVersions] = useState<any>([]);
   useEffect(() => {
-    fetch('https://api.github.com/repos/paritytech/ink/releases')
+    fetch('https://crates.io/api/v1/crates/ink')
     .then((res) => res.json())
     .then((res) => {
-      const inkVersions = res.map((d: InkData) => {
-        return { tag_name: d.tag_name }
-      }).filter((f: InkData) => f.tag_name.length < 7).splice(0, 5);
+      const inkVersions = res.versions.map((d: any) => {
+        return { ink_version: d.num, name: `v${d.num}` }
+      }).filter((f: any) => f.ink_version.length < 7).splice(0, 5);
       if (inkVersions && Array.isArray(inkVersions)) {
         setVersions(inkVersions);
       }
@@ -44,8 +37,8 @@ const App = (): ReactElement => {
   const inkVersions = useInkVersions();
   const [state, dispatch]: [State, Dispatch] = useContext(AppContext);
   const [, messageDispatch]: [MessageState, MessageDispatch] = useContext(MessageContext);
+  const location = useLocation();
   const { monacoUri: uri, formatting } = state;
-  const [selectedInkVersion, setSelectedInkVersion] = useState<any>('');
 
   useEffect(() => {
     if (!uri) return;
@@ -66,13 +59,18 @@ const App = (): ReactElement => {
     const code = formatting.payload.payload.payload.source;
     model.setValue(code);
   }, [formatting]);
-
-  useEffect(() => {
-    if (inkVersions.length > 0) {
-      setSelectedInkVersion(inkVersions[0]?.tag_name)
-    }
-  }, [inkVersions])
   
+  useEffect(() => {
+    if (location.pathname) {
+      if (location.pathname.length > 6 && location.pathname.length < 9) {
+        dispatch({
+          type: 'SET_INK_VERSION',
+          payload: location.pathname.slice(2, 7),
+        });
+      }
+    }
+  }, [location.pathname])
+
   const onRustAnalyzerStartLoad = () => {
     messageDispatch({
       type: 'LOG_SYSTEM',
@@ -90,13 +88,15 @@ const App = (): ReactElement => {
       payload: { status: 'DONE', content: 'Rust Analyzer Ready' },
     });
   };
-  
-  if (selectedInkVersion === '') {
-    return <div>Loading</div>;
+
+  if (!state.ink_version) {
+    return <div>Hello</div>
   }
+  
   return (
     <Layout
-      header={<Header inkVersions={inkVersions} selectedInkVersion={selectedInkVersion} />}
+      key={state.ink_version}
+      header={<Header inkVersions={inkVersions} />}
       editor={
         <InkEditor
           onRustAnalyzerStartLoad={onRustAnalyzerStartLoad}
@@ -106,7 +106,7 @@ const App = (): ReactElement => {
           rustAnalyzer={state.rustAnalyzer}
           minimap={state.minimap}
           setURI={uri => dispatch({ type: 'SET_URI', payload: uri })}
-          selectedInkVersion={selectedInkVersion}
+          selectedInkVersion={state.ink_version}
         />
       }
       console={<Console />}

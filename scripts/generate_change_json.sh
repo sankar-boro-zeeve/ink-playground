@@ -1,13 +1,13 @@
 #!/bin/bash
 
-versions=("v4_2_1" "v4_2_0")
-versions_num=(4.2.1 4.2.0)
-
-COUNT=0
-
-for version in ${versions[*]}
+ink_releases=$( jq -r '.[] | .ink_version' ./config/ink-data/stable_ink_releases.json; )
+echo $ink_releases
+for version in ${ink_releases[*]}
 do
+	echo $version
+	thisversion=$(echo "$version" | sed 's/\./_/g')
+	echo $thisversion 
 	cargo run --package crate-extractor --locked -- create \
-			-m $HOME/ink-data/contract_$version/Cargo.lock \
-			-o packages/_generated/change/src/change_$version.json
+			-m $HOME/ink-data/contract_$thisversion/Cargo.lock \
+			-o packages/_generated/change/src/change_$thisversion.json
 done

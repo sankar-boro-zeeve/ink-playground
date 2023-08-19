@@ -43,7 +43,10 @@ generate-bindings:
 # 	cargo run --package crate-extractor -- create \
 # 			-m ./crates/contract/Cargo.toml \
 # 			-o packages/_generated/change/src/change.json
+
+
 generate-change-json:
+	./scripts/make_ink_compilers.sh
 	./scripts/generate_change_json.sh
 
 generate-rust-analyzer:

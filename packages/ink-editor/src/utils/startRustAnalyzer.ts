@@ -36,7 +36,7 @@ export const startRustAnalyzer = async (uri: Uri, selectedInkVersion: string) =>
 
   const allTokens: Array<Token> = [];
   monaco.languages.onLanguage(modeId, configureLanguage(worldState, allTokens));
-  const data = await fetch(`./change_${selectedInkVersion.replaceAll('.', '_')}.json`);
+  const data = await fetch(`http://localhost:8080/change_${selectedInkVersion.replaceAll('.', '_')}.json`);
   const textData = await data.text();
   const encoder = new TextEncoder();
   const bufferData = encoder.encode(textData);

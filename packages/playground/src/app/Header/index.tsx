@@ -55,16 +55,6 @@ export const Header = ({inkVersions}: any): ReactElement => {
   const [state, dispatch]: [State, Dispatch] = useContext(AppContext);
   const [, dispatchMessage]: [MessageState, MessageDispatch] = useContext(MessageContext);
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const [selectedInkVersion, setSelectedInkVersion] = useState<any>();
-  useEffect(() => {
-    if (location.pathname) {
-      setSelectedInkVersion(location.pathname.slice(1, 7))
-    } else {
-      setSelectedInkVersion(inkVersions[0]?.tag_name)
-    }
-  }, [inkVersions, location])
 
   const settingsOverlay = useRef<OverlayPanel>(null);
   const shareOverlay = useRef<OverlayPanel>(null);
@@ -78,8 +68,8 @@ export const Header = ({inkVersions}: any): ReactElement => {
   const tooltipContent = mapSizeInfo(state.contractSize);
 
   const compileVersion = (state: any, dispatch: any, dispatchMessage: any) => {
-    if (selectedInkVersion) {
-      compile(state, dispatch, dispatchMessage, selectedInkVersion)
+    if (state.ink_version) {
+      compile(state, dispatch, dispatchMessage, state.ink_version)
     }
   }
 
@@ -141,11 +131,14 @@ export const Header = ({inkVersions}: any): ReactElement => {
         />
         {inkVersions.length > 0 ? <>
           <select className='dark:bg-primary' onChange={(e) => {
-            navigate(`/${e.target.value}`, { state: { version: e.target.value } });
-            setSelectedInkVersion(e.target.value);
-          }} value={selectedInkVersion}>
+            navigate(`/v${e.target.value}/`, { state: { version: e.target.value } });
+            dispatch({
+              type: 'SET_INK_VERSION',
+              payload: e.target.value
+            })
+          }} value={state.ink_version || ''}>
             {inkVersions.map((v: any) => { 
-              return <option key={v.tag_name}>{v.tag_name}</option>
+              return <option key={v.ink_version} value={v.ink_version}>{v.name}</option>
               }
             )}
           </select></>: null}

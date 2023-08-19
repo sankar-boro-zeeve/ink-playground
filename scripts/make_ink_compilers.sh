@@ -4,7 +4,7 @@
 run_local() {
     echo "running local..."
     jq --version
-    ink_releases=$( jq -r '.[] | .tag_name' ./config/ink-data/stable_ink_releases.json; )
+    ink_releases=$( jq -r '.[] | .ink_version' ./config/ink-data/stable_ink_releases.json; )
     echo $ink_releases
 }
 
@@ -32,20 +32,16 @@ thisdir="/home/sankar/ink-data"
 rm -rf -p $thisdir
 mkdir -p $thisdir
 
-for tag_name in $ink_releases
+for ink_version in $ink_releases
 do
-    if [[ $COUNT == 5 ]]
-    then
-        break;
-    fi
-    v_string=$(echo "$tag_name" | sed 's/\./_/g')
+    v_string=$(echo "$ink_version" | sed 's/\./_/g')
     cd $thisdir
     cargo contract new contract_$v_string
     cd contract_$v_string
-    cargo update -p ink --precise ${tag_name:1:5}
+    cargo update -p ink --precise ${ink_version:0:5}
     for i in 0 1 2 3 4 5
     do
-        build ${tag_name:1:5}
+        build ${ink_version:0:5}
     done
     cargo contract build
     ls -la

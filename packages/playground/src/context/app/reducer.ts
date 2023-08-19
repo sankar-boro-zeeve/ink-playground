@@ -15,6 +15,7 @@ export const defaultState: State = {
   gist: { type: 'NOT_ASKED' },
   contractSize: null,
   rustAnalyzer: false,
+  ink_version: null,
 };
 
 export type State = {
@@ -28,6 +29,7 @@ export type State = {
   gist: GistState;
   contractSize: number | null;
   rustAnalyzer: boolean;
+  ink_version: string | null;
 };
 
 export type GistState =
@@ -60,7 +62,8 @@ export type Action =
   | { type: 'SET_GIST_STATE'; payload: GistState }
   | { type: 'SET_URI'; payload: Uri }
   | { type: 'SET_CONTRACT_SIZE'; payload: number | null }
-  | { type: 'SET_RUST_ANALYZER_STATE'; payload: boolean };
+  | { type: 'SET_RUST_ANALYZER_STATE'; payload: boolean }
+  | { type: 'SET_INK_VERSION'; payload: string };
 
 export type Dispatch = (action: Action) => void;
 
@@ -115,6 +118,11 @@ export const reducer = (state: State, action: Action): State => {
       return {
         ...state,
         contractSize: action.payload,
+      };
+    case 'SET_INK_VERSION':
+      return {
+        ...state,
+        ink_version: action.payload,
       };
     default:
       return state;

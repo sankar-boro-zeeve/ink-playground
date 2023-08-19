@@ -52,7 +52,6 @@ export const extractContractSize = (stdout: string): number => {
 };
 
 export async function compile(state: State, dispatch: Dispatch, dispatchMessage: MessageDispatch, version: string) {
-  console.log('version', version)
   if (state.compile.type === 'IN_PROGRESS') return;
 
   dispatch({ type: 'SET_COMPILE_STATE', payload: { type: 'IN_PROGRESS' } });
@@ -82,8 +81,7 @@ export async function compile(state: State, dispatch: Dispatch, dispatchMessage:
   }
 
   const code = model.getValue();
-  // version.slice(1, 6).replaceAll(".", "_")
-  const result = await compileRequest({ compileUrl: COMPILE_URL || '' }, { source: code, version: version.slice(1, 6).replaceAll(".", "_")  });
+  const result = await compileRequest({ compileUrl: COMPILE_URL || '' }, { source: code, version: version.slice(0, 6).replaceAll(".", "_")  });
 
   dispatch({
     type: 'SET_COMPILE_STATE',
