@@ -3507,14 +3507,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^18.0.33":
-  version: 18.0.33
-  resolution: "@types/react@npm:18.0.33"
+"@types/react@npm:^18.2.29":
+  version: 18.2.29
+  resolution: "@types/react@npm:18.2.29"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: 4fbd2b2b6a26378bdfde121081a6406ec2d39e4ba87ea5f6897ab7bb2198713165e6fd703ad4ed7ba1d4f23ef54a4c9f108f3105c7ed8e136411ee6bdebc5669
+  checksum: 3d09ac61a683fa976512a28ac175b9d823f0368adc5fb2abf53f64ab030e8ad866a201a8029f92ff48246c8e326f7517ebe165f976ecb412627c65c6f9a7c9d3
   languageName: node
   linkType: hard
 
@@ -9871,7 +9871,7 @@ __metadata:
     "@types/history": ^5.0.0
     "@types/jest": ^29.2.5
     "@types/querystringify": ^2.0.0
-    "@types/react": ^18.0.33
+    "@types/react": ^18.2.29
     "@types/react-dom": ^18.0.11
     "@types/react-test-renderer": ^18.0.0
     "@types/tailwindcss": ^3.0.10
