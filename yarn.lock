@@ -7742,9 +7742,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"isomorphic-git@npm:^1.24.0":
-  version: 1.24.0
-  resolution: "isomorphic-git@npm:1.24.0"
+"isomorphic-git@npm:^1.25.0":
+  version: 1.25.0
+  resolution: "isomorphic-git@npm:1.25.0"
   dependencies:
     async-lock: ^1.1.0
     clean-git-ref: ^2.0.1
@@ -7759,7 +7759,7 @@ __metadata:
     simple-get: ^4.0.1
   bin:
     isogit: cli.cjs
-  checksum: 1f8cbf0583e9cf14a06ad8d4ef209869a29181241de4ca817cd45747f9756747e71908a67b52984071da0c7f1cec80d01bba8f1120551420ef62605bc6c9410e
+  checksum: d7f97cc3a7c7deb45077e3308c72aadd20a4a2ecf1c4ba929edb4e658356453bfe10daa38dcb5a34de0432e0a98ad91cfc540e62a8604aec9fd07ab5e7197299
   languageName: node
   linkType: hard
 
@@ -9884,7 +9884,7 @@ __metadata:
     history: ^5.3.0
     html-webpack-plugin: ^5.5.0
     https-browserify: ^1.0.0
-    isomorphic-git: ^1.24.0
+    isomorphic-git: ^1.25.0
     jest: ^29.3.1
     jest-environment-jsdom: ^29.3.1
     monaco-editor: ^0.33.0
